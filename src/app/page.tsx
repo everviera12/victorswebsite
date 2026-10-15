@@ -649,86 +649,109 @@ function ProjectModal({
 
 export default function HomePage() {
   const reduceMotion = useReducedMotion();
+  const heroRef = useRef<HTMLElement>(null);
   const portraitRef = useRef<HTMLDivElement>(null);
   const [activeProject, setActiveProject] = useState<Project | null>(null);
-  const { scrollYProgress } = useScroll({
+
+  /* Parallax on the portrait: a wider travel so the image reads as
+     its own layer drifting against the copy. */
+  const { scrollYProgress: portraitProgress } = useScroll({
     target: portraitRef,
     offset: ["start end", "end start"],
   });
-  const portraitY = useTransform(scrollYProgress, [0, 1], ["7%", "-7%"]);
+  const portraitY = useTransform(portraitProgress, [0, 1], ["15%", "-15%"]);
+  const portraitScale = useTransform(
+    portraitProgress,
+    [0, 0.5, 1],
+    [1.12, 1, 1.04],
+  );
+
+  /* Copy drifts up and fades as the hero scrolls away */
+  const { scrollYProgress: heroProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const copyY = useTransform(heroProgress, [0, 1], ["0%", "-14%"]);
+  const copyOpacity = useTransform(heroProgress, [0, 0.55], [1, 0]);
 
   const closeModal = useCallback(() => setActiveProject(null), []);
   const openModal = useCallback((project: Project) => setActiveProject(project), []);
 
   const heroLines = [
-    <>Diseño y construyo</>,
-    <>
-      productos <span className={ACCENT_GRADIENT}>digitales</span>
-    </>,
-    <>que la gente usa.</>,
+    <>Ayudando a empresas a <span className={ACCENT_GRADIENT}>destacar, optimizar e innovar</span></>,
   ];
 
   return (
     <main>
       {/* 01 Quién soy */}
       <motion.section
+        ref={heroRef}
         variants={stagger(0.09, 0.05)}
         initial={reduceMotion ? false : "hidden"}
         animate="show"
         className="relative overflow-hidden px-5 py-8 lg:px-10 lg:py-16"
       >
-        <motion.p
-          variants={fadeUp}
-          className="flex items-center gap-3 text-xs tracking-[0.3em] uppercase"
-          style={{ WebkitBackgroundClip: 'text' }}
+        <motion.div
+          variants={stagger(0.09, 0.05)}
+          style={reduceMotion ? undefined : { y: copyY, opacity: copyOpacity }}
         >
-          <motion.span
-            aria-hidden="true"
-            variants={{
-              hidden: { scaleX: 0 },
-              show: {
-                scaleX: 1,
-                transition: { duration: 0.8, ease: EASE_OUT, delay: 0.15 },
-              },
-            }}
-            className="h-px w-8 origin-left bg-gradient-to-br from-[#00ff66] to-emerald-500"
-          />
-          <span className={ACCENT_GRADIENT}>01 Sobre mí</span>
-        </motion.p>
+          <motion.p
+            variants={fadeUp}
+            className="flex items-center gap-3 text-xs tracking-[0.3em] uppercase"
+            style={{ WebkitBackgroundClip: 'text' }}
+          >
+            <motion.span
+              aria-hidden="true"
+              variants={{
+                hidden: { scaleX: 0 },
+                show: {
+                  scaleX: 1,
+                  transition: { duration: 0.8, ease: EASE_OUT, delay: 0.15 },
+                },
+              }}
+              className="h-px w-8 origin-left bg-linear-to-br from-[#00ff66] to-emerald-500"
+            />
+            <span className={ACCENT_GRADIENT}>01 Sobre mí</span>
+          </motion.p>
 
-        <motion.h1
-          variants={stagger(0.1, 0.15)}
-          className="mt-6 max-w-5xl text-5xl leading-[0.95] font-semibold tracking-tight sm:text-6xl lg:text-8xl"
-        >
-          {heroLines.map((line, index) => (
-            <span key={index} className="block overflow-hidden pb-[0.1em]">
-              <motion.span variants={maskLine} className="block">
-                {line}
-              </motion.span>
-            </span>
-          ))}
-        </motion.h1>
+          <motion.h1
+            variants={stagger(0.1, 0.15)}
+            className="mt-6 max-w-5xl text-5xl leading-[0.95] font-semibold tracking-tight sm:text-6xl lg:text-8xl"
+          >
+            {heroLines.map((line, index) => (
+              <span key={index} className="block overflow-hidden pb-[0.1em]">
+                <motion.span variants={maskLine} className="block">
+                  {line}
+                </motion.span>
+              </span>
+            ))}
+          </motion.h1>
+        </motion.div>
 
-        <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
-          <motion.div variants={stagger(0.1, 0.45)} className="max-w-xl">
+        <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-start">
+          <motion.div
+            variants={stagger(0.1, 0.45)}
+            className="max-w-xl"
+            style={reduceMotion ? undefined : { y: copyY, opacity: copyOpacity }}
+          >
             <motion.p
               variants={fadeUp}
               className="text-lg leading-relaxed text-white/60"
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-              vel sem at augue aliquet tempor. Cras posuere, erat at feugiat
-              posuere, est lectus tempus nibh, eget ultrices urna urna. Nam
-              mattis, felis sed fermentum euismod, sapien risus consequat mi,
-              quis interdum lorem.
+              Convierte tus ideas en{" "}
+              <span className={ACCENT_GRADIENT}>experiencias digitales</span>{" "}
+              que conecten con tus clientes.
             </motion.p>
             <motion.p
               variants={fadeUp}
               className="mt-4 text-lg leading-relaxed text-white/60"
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
-              commodo cursus magna, vel scelerisque nisl consectetur et. Donec
-              ullamcorper nulla non metus auctor fringilla. Maecenas faucibus
-              mollis interdum.
+              Creamos{" "}
+              <span className={ACCENT_GRADIENT}>
+                sitios web modernos, funcionales y estratégicos
+              </span>{" "}
+              que optimizan tus procesos, fortalecen la confianza y hacen crecer
+              tu presencia digital.
             </motion.p>
           </motion.div>
 
@@ -747,7 +770,11 @@ export default function HomePage() {
             <motion.div
               ref={portraitRef}
               className="absolute inset-0"
-              style={reduceMotion ? undefined : { y: portraitY }}
+              style={
+                reduceMotion
+                  ? undefined
+                  : { y: portraitY, scale: portraitScale }
+              }
             >
               <Image
                 src="/yo.jpg"
