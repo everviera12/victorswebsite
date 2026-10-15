@@ -765,7 +765,7 @@ export default function HomePage() {
               },
               hover: { scale: 1.02, transition: { duration: 0.6, ease: EASE_OUT } },
             }}
-            className="relative aspect-2/3 w-full overflow-hidden rounded-xl lg:w-72 xl:w-80"
+            className="relative aspect-2/3 w-full overflow-hidden rounded-xl lg:w-96 xl:w-[28rem]"
           >
             <motion.div
               ref={portraitRef}
@@ -781,7 +781,7 @@ export default function HomePage() {
                 alt="Retrato de Victor Viera"
                 fill
                 priority
-                sizes="(max-width: 1024px) 100vw, 320px"
+                sizes="(max-width: 1024px) 100vw, (max-width: 1280px) 384px, 448px"
                 className="scale-100 object-cover"
               />
             </motion.div>
