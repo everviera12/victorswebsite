@@ -13,6 +13,9 @@ import { PROJECTS } from "@/lib/content";
 
 const CURRENT_YEAR = new Date().getFullYear();
 
+const ACCENT_GRADIENT = "bg-gradient-to-br from-[#00ff66] to-emerald-500 bg-clip-text text-transparent";
+const ACCENT_GRADIENT_BG = "bg-gradient-to-br from-[#00ff66] to-emerald-500";
+
 const EASE_OUT: [number, number, number, number] = [0.22, 1, 0.36, 1];
 const EASE_STANDARD: [number, number, number, number] = [0.4, 0, 0.2, 1];
 const SPRING = { type: "spring", stiffness: 400, damping: 32 } as const;
@@ -69,7 +72,7 @@ const maskLine: Variants = {
 const cardVariants: Variants = {
   hidden: { opacity: 0, y: 28 },
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE_OUT } },
-  hover: { y: -6, transition: SPRING },
+  hover: { y: -6, boxShadow: "0 25px 50px -12px rgba(0, 255, 102, 0.15)", transition: SPRING },
 };
 
 const mediaVariants: Variants = {
@@ -110,30 +113,24 @@ export default function HomePage() {
   const heroLines = [
     <>Diseño y construyo</>,
     <>
-      productos <span className="text-accent">digitales</span>
+      productos <span className={ACCENT_GRADIENT}>digitales</span>
     </>,
     <>que la gente usa.</>,
   ];
 
   return (
     <main>
-      {/* 01 — Quién soy */}
+      {/* 01 Quién soy */}
       <motion.section
         variants={stagger(0.09, 0.05)}
         initial={reduceMotion ? false : "hidden"}
         animate="show"
         className="relative overflow-hidden px-5 py-8 lg:px-10 lg:py-16"
       >
-        <motion.div
-          aria-hidden="true"
-          variants={fadeIn}
-          transition={{ duration: 1.4, delay: 0.1 }}
-          className="pointer-events-none absolute -top-48 -right-24 h-[520px] w-[760px] rounded-full bg-[radial-gradient(closest-side,rgba(0,255,102,0.13),transparent)]"
-        />
-
         <motion.p
           variants={fadeUp}
-          className="flex items-center gap-3 text-xs tracking-[0.3em] text-accent uppercase"
+          className="flex items-center gap-3 text-xs tracking-[0.3em] uppercase"
+          style={{ WebkitBackgroundClip: 'text' }}
         >
           <motion.span
             aria-hidden="true"
@@ -144,9 +141,9 @@ export default function HomePage() {
                 transition: { duration: 0.8, ease: EASE_OUT, delay: 0.15 },
               },
             }}
-            className="h-px w-8 origin-left bg-accent"
+            className="h-px w-8 origin-left bg-gradient-to-br from-[#00ff66] to-emerald-500"
           />
-          01 — Sobre mí
+          <span className={ACCENT_GRADIENT}>01 Sobre mí</span>
         </motion.p>
 
         <motion.h1
@@ -193,8 +190,9 @@ export default function HomePage() {
                 scale: 1,
                 transition: { duration: 1.1, ease: EASE_OUT, delay: 0.3 },
               },
+              hover: { scale: 1.02, transition: { duration: 0.6, ease: EASE_OUT } },
             }}
-            className="relative aspect-3/4 w-full overflow-hidden border border-white/15 lg:w-72 xl:w-80"
+            className="relative aspect-2/3 w-full overflow-hidden rounded-xl lg:w-72 xl:w-80"
           >
             <motion.div
               ref={portraitRef}
@@ -207,14 +205,14 @@ export default function HomePage() {
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 320px"
-                className="scale-115 object-cover invert"
+                className="scale-100 object-cover"
               />
             </motion.div>
           </motion.div>
         </div>
       </motion.section>
 
-      {/* 02 — Proyectos */}
+      {/* 02 Proyectos */}
       <motion.section
         variants={stagger(0.08)}
         initial={reduceMotion ? false : "hidden"}
@@ -229,7 +227,8 @@ export default function HomePage() {
           <div>
             <motion.p
               variants={fadeUp}
-              className="flex items-center gap-3 text-xs tracking-[0.3em] text-accent uppercase"
+              className="flex items-center gap-3 text-xs tracking-[0.3em] uppercase"
+              style={{ WebkitBackgroundClip: 'text' }}
             >
               <motion.span
                 aria-hidden="true"
@@ -240,9 +239,9 @@ export default function HomePage() {
                     transition: { duration: 0.8, ease: EASE_OUT, delay: 0.1 },
                   },
                 }}
-                className="h-px w-8 origin-left bg-accent"
+                className="h-px w-8 origin-left bg-gradient-to-br from-[#00ff66] to-emerald-500"
               />
-              02 — Proyectos
+              <span className={ACCENT_GRADIENT}>02 Proyectos</span>
             </motion.p>
             <motion.h2
               variants={fadeUp}
@@ -258,19 +257,19 @@ export default function HomePage() {
 
         <motion.ul
           variants={stagger(0.07)}
-          className="mt-8 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-2 xl:grid-cols-3"
+          className="mt-8 grid gap-4 overflow-hidden border border-white/10 bg-white/10 rounded-xl sm:grid-cols-2 xl:grid-cols-3"
         >
           {PROJECTS.map((project, index) => (
             <motion.li
               key={project.title}
               variants={cardVariants}
-              className="group bg-black"
+              className="group bg-black rounded-lg"
             >
               <motion.article
                 whileHover="hover"
                 className="flex h-full flex-col p-5 lg:p-6"
               >
-                <div className="relative aspect-16/9 w-full overflow-hidden bg-white/5">
+                <div className="relative aspect-16/9 w-full overflow-hidden bg-white/5 rounded-lg">
                   <motion.div variants={mediaVariants} className="absolute inset-0">
                     <Image
                       src={project.image[0]}
@@ -295,7 +294,7 @@ export default function HomePage() {
                   </div>
                   <motion.span
                     variants={{
-                      hover: { color: "#00ff66", transition: { duration: 0.3 } },
+                      hover: { color: "rgb(0, 255, 102)", transition: { duration: 0.3 } },
                     }}
                     className="text-xs tracking-[0.2em] text-white/30"
                   >
@@ -317,9 +316,9 @@ export default function HomePage() {
                     href={project.link}
                     target="_blank"
                     rel="noreferrer"
-                    className="group/link mt-5 inline-flex items-center gap-2 self-start text-sm font-medium text-accent outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-black"
+                    className="group/link mt-5 inline-flex items-center gap-2 self-start text-sm font-medium outline-none focus-visible:ring-2 focus-visible:ring-[#00ff66] focus-visible:ring-offset-4 focus-visible:ring-offset-black"
                   >
-                    Ver proyecto
+                    <span className={ACCENT_GRADIENT}>Ver proyecto</span>
                     <motion.svg
                       aria-hidden="true"
                       variants={arrowVariants}
@@ -339,7 +338,7 @@ export default function HomePage() {
         </motion.ul>
       </motion.section>
 
-      {/* 03 — Contacto */}
+      {/* 03 Contacto */}
       <motion.section
         variants={stagger(0.08)}
         initial={reduceMotion ? false : "hidden"}
@@ -349,7 +348,8 @@ export default function HomePage() {
       >
         <motion.p
           variants={fadeUp}
-          className="flex items-center gap-3 text-xs tracking-[0.3em] text-accent uppercase"
+          className="flex items-center gap-3 text-xs tracking-[0.3em] uppercase"
+          style={{ WebkitBackgroundClip: 'text' }}
         >
           <motion.span
             aria-hidden="true"
@@ -360,9 +360,9 @@ export default function HomePage() {
                 transition: { duration: 0.8, ease: EASE_OUT, delay: 0.1 },
               },
             }}
-            className="h-px w-8 origin-left bg-accent"
+            className="h-px w-8 origin-left bg-gradient-to-br from-[#00ff66] to-emerald-500"
           />
-          03 — Contacto
+          <span className={ACCENT_GRADIENT}>03 Contacto</span>
         </motion.p>
 
         <motion.h2
@@ -377,8 +377,8 @@ export default function HomePage() {
             </span>
           ))}
           <span className="block overflow-hidden pb-[0.1em]">
-            <motion.span variants={maskLine} className="block text-accent">
-              Hablemos.
+            <motion.span variants={maskLine} className="block">
+              <span className={ACCENT_GRADIENT}>Hablemos.</span>
             </motion.span>
           </span>
         </motion.h2>
@@ -408,13 +408,13 @@ export default function HomePage() {
                   ? { target: "_blank", rel: "noreferrer" }
                   : {})}
                 whileHover="hover"
-                className="relative flex items-center justify-between gap-4 py-5 outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset lg:py-6"
+                className="relative flex items-center justify-between gap-4 py-5 outline-none focus-visible:ring-2 focus-visible:ring-[#00ff66] focus-visible:ring-inset lg:py-6"
               >
                 <motion.span
                   variants={lineVariants}
                   initial={{ scaleX: 0 }}
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-x-0 bottom-0 h-px origin-left bg-accent"
+                  className="pointer-events-none absolute inset-x-0 bottom-0 h-px origin-left bg-gradient-to-br from-[#00ff66] to-emerald-500"
                 />
                 <motion.span
                   variants={labelVariants}
