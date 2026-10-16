@@ -8,7 +8,7 @@ export const PROJECTS = [
             '/projects/urban/urban3.jpg',
             '/projects/urban/urban4.jpg'
         ],
-        link: '',
+        link: 'https://urbanvillagegs.com.mx',
         logo: '/logos/urban-village.svg'
     },
     {
@@ -20,7 +20,19 @@ export const PROJECTS = [
             '/projects/optumwa/optum3.jpg',
             '/projects/optumwa/optum4.jpg'
         ],
-        link: '',
+        link: 'https://optumwa.com',
+        logo: '/logos/optum.svg'
+    },
+    {
+        title: 'Welcome to Optum',
+        description: '',
+        image: [
+            '/projects/welcome-to-optum/welcome-optum-2.png',
+            '/projects/welcome-to-optum/welcome-optum-3.png',
+            '/projects/welcome-to-optum/welcome-optum-4.png',
+            '/projects/welcome-to-optum/welcome-optum.png',
+        ],
+        link: 'https://welcometo.optumcare.com',
         logo: '/logos/optum.svg'
     },
     {
@@ -33,7 +45,7 @@ export const PROJECTS = [
             '/projects/calljar/calljar4.jpg',
             '/projects/calljar/calljar5.jpg'
         ],
-        link: '',
+        link: 'https://calljar.com',
         logo: '/logos/jar-insurance.svg'
     },
     {
@@ -46,7 +58,7 @@ export const PROJECTS = [
             '/projects/optum-plastic-surgery/optumps4.jpg',
             '/projects/optum-plastic-surgery/optumps5.jpg'
         ],
-        link: '',
+        link: 'https://optumplasticsurgery.com',
         logo: '/logos/optum-plastic-surgurey.svg'
     },
     {
@@ -57,7 +69,7 @@ export const PROJECTS = [
             '/projects/mundo-pixel/mundopixel2.jpg',
             '/projects/mundo-pixel/mundopixel3.jpg'
         ],
-        link: '',
+        link: 'https://www.mundopixel.com.mx',
         logo: '/logos/mundopixel.svg'
     },
     {
@@ -69,7 +81,7 @@ export const PROJECTS = [
             '/projects/optum-resources/optum-resources3.jpg',
             '/projects/optum-resources/optum-resources4.jpg'
         ],
-        link: '',
+        link: 'https://resources.optum.com',
         logo: '/logos/optum.svg'
     },
 ]
